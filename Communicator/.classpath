@@ -4,7 +4,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="lib" path="libs/ufdw.jar">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="opentrackkinect-master/libs"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Communicator/libs"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Projects/Engineering-Culminating/libraries/arduino.jar"/>
