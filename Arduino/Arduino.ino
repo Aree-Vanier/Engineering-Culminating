@@ -9,7 +9,7 @@ Servo turn;
 void setup(){
   Serial.begin(9600);
   turn.attach(12);
-  up.attach(13);
+  up.attach(10);
 }
 
 void loop(){
@@ -35,14 +35,6 @@ void loop(){
     Serial.println("DONE");
   }
   
-  if(moveX == 0){
-    turn.writeMicroseconds(1500);
-  }
-  if(moveX == 4){
-    turn.writeMicroseconds(1900);
-    Serial.println("4");
-  }
-  if(moveX == -4){
-    turn.writeMicroseconds(1100);
-  }
+  turn.writeMicroseconds(moveX*10+1500);
+  up.writeMicroseconds(moveY*10+1500);
 }
