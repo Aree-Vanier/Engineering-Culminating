@@ -12,15 +12,14 @@ import javax.swing.SwingUtilities;
 
 import arduino.Arduino;
 import edu.ufl.digitalworlds.j4k.J4KSDK;
-import edu.ufl.digitalworlds.j4k.Skeleton;
 
 public class Main {
 	
-	static Kinect myKinect;
-	static JLabel label1 = new JLabel("x : " + "0");
-	static JLabel label2 = new JLabel("y : " + "0");
-	static JLabel label3 = new JLabel("z : " + "0");
-	static JFrame f;
+	Kinect myKinect;
+	JLabel xLabel = new JLabel("x : " + "0");
+	JLabel yLabel = new JLabel("y : " + "0");
+	JLabel zLabel = new JLabel("z : " + "0");
+	JFrame f;
 	
 	public Arduino arduino;
 	
@@ -48,19 +47,19 @@ public class Main {
 		f.setLayout(new BoxLayout(f.getContentPane(), BoxLayout.Y_AXIS));
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setMinimumSize(new Dimension(300,150));
-		f.add(label1);
-		f.add(label2);
-		f.add(label3);
+		f.add(xLabel);
+		f.add(yLabel);
+		f.add(zLabel);
 		
 		f.setVisible(true);
 		
-		label1.setFont(new Font("Serif", Font.PLAIN, 24));
-		label2.setFont(new Font("Serif", Font.PLAIN, 24));
-		label3.setFont(new Font("Serif", Font.PLAIN, 24));
+		xLabel.setFont(new Font("Serif", Font.PLAIN, 24));
+		yLabel.setFont(new Font("Serif", Font.PLAIN, 24));
+		zLabel.setFont(new Font("Serif", Font.PLAIN, 24));
 		
-		label1.setAlignmentX(Component.CENTER_ALIGNMENT);
-		label2.setAlignmentX(Component.CENTER_ALIGNMENT);
-		label3.setAlignmentX(Component.CENTER_ALIGNMENT);
+		xLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		yLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		zLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
 		f.setTitle("Intitializing Kinect...");
 		

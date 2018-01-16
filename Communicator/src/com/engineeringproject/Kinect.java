@@ -1,6 +1,5 @@
 package com.engineeringproject;
 
-import arduino.Arduino;
 import edu.ufl.digitalworlds.j4k.J4KSDK;
 import edu.ufl.digitalworlds.j4k.Skeleton;
 
@@ -22,9 +21,9 @@ public class Kinect extends J4KSDK {
 			skeletons[i] = Skeleton.getSkeleton(i, skeleton_tracked, positions,orientations,joint_status, this);
 			
 			if (skeletons[i] != null && skeletons[i].isTracked()) {
-				X = skeletons[i].get3DJointX(Skeleton.HEAD);
-				Y = skeletons[i].get3DJointY(Skeleton.HEAD);
-				Z = skeletons[i].get3DJointZ(Skeleton.HEAD);
+				X = skeletons[i].get3DJointX(Skeleton.SPINE_MID);
+				Y = skeletons[i].get3DJointY(Skeleton.SPINE_MID);
+				Z = skeletons[i].get3DJointZ(Skeleton.SPINE_MID);
 				
 				if(X > 0) {
 					main.arduino.serialWrite("95|");
@@ -38,9 +37,9 @@ public class Kinect extends J4KSDK {
 					main.arduino.serialWrite("51|");
 				}
 				
-				main.label1.setText("X : " + String.format("%.3f", X));
-				main.label2.setText("Y : " + String.format("%.3f", Y));
-				main.label3.setText("Z : " + String.format("%.3f", Z));
+				main.xLabel.setText("X : " + String.format("%.3f", X));
+				main.yLabel.setText("Y : " + String.format("%.3f", Y));
+				main.zLabel.setText("Z : " + String.format("%.3f", Z));
 				
 			}
 		}
