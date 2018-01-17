@@ -3,13 +3,15 @@
 int moveX;
 int moveY;
 
-Servo up;
+Servo up1;
+Servo up2;
 Servo turn;
 
 void setup(){
   Serial.begin(9600);
   turn.attach(12);
-  up.attach(10);
+  up1.attach(10);
+  up2.attach(8);
 }
 
 void loop(){
@@ -36,5 +38,6 @@ void loop(){
   }
   
   turn.writeMicroseconds(moveX*10+1500);
-  up.writeMicroseconds(moveY*10+1500);
+  up1.writeMicroseconds(moveY*10+1500);
+  up2.writeMicroseconds(moveY*-10+1500);
 }
