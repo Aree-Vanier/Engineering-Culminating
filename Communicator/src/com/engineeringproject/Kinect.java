@@ -6,9 +6,9 @@ import edu.ufl.digitalworlds.j4k.Skeleton;
 public class Kinect extends J4KSDK {
 	
 	public Skeleton skeletons[] = new Skeleton[6];
-	public float X, Y, Z;
 	
-	int lastSignal = -1;
+	int lastSignalX = -1;
+	int lastSignalY = -1;
 	
 	public Main main;
 	
@@ -23,33 +23,38 @@ public class Kinect extends J4KSDK {
 			skeletons[i] = Skeleton.getSkeleton(i, skeleton_tracked, positions,orientations,joint_status, this);
 			
 			if (skeletons[i] != null && skeletons[i].isTracked()) {
-				X = skeletons[i].get3DJointX(Skeleton.SPINE_MID);
-				Y = skeletons[i].get3DJointY(Skeleton.SPINE_MID);
-				Z = skeletons[i].get3DJointZ(Skeleton.SPINE_MID);
+				final float X = skeletons[i].get3DJointX(Skeleton.HEAD);
+				final float Y = skeletons[i].get3DJointY(Skeleton.HEAD);
+				final float Z = skeletons[i].get3DJointZ(Skeleton.HEAD);
 				
-				if(X > 0) {
-					if(lastSignal != 0) {
-						main.arduino.serialWrite("95|");
-						lastSignal = 0;
+				Thread thread = new Thread() {
+					public void run() {
+						if(X > 0) {
+							if(lastSignalX != 0) {
+								main.arduino.serialWrite("95|");
+								lastSignalX = 0;
+							}
+						} else {
+							if(lastSignalX != 1) {
+								main.arduino.serialWrite("15|");
+								lastSignalX = 1;
+							}
+						}
+						
+						if(Y > 0) {
+							if(lastSignalY != 0) {
+								main.arduino.serialWrite("59|");
+								lastSignalY = 0;
+							}
+						} else {
+							if(lastSignalY != 1) {
+								main.arduino.serialWrite("51|");
+								lastSignalY = 1;
+							}
+						}
 					}
-				} else {
-					if(lastSignal != 1) {
-						main.arduino.serialWrite("15|");
-						lastSignal = 1;
-					}
-				}
-				
-				if(Y > 0) {
-					if(lastSignal != 2) {
-						main.arduino.serialWrite("59|");
-						lastSignal = 2;
-					}
-				} else {
-					if(lastSignal != 3) {
-						main.arduino.serialWrite("51|");
-						lastSignal = 3;
-					}
-				}
+				};
+				thread.start();
 				
 				main.xLabel.setText("X : " + String.format("%.3f", X));
 				main.yLabel.setText("Y : " + String.format("%.3f", Y));
