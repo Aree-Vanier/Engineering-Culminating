@@ -7,8 +7,7 @@ public class Kinect extends J4KSDK {
 	
 	public Skeleton skeletons[] = new Skeleton[6];
 	
-	int lastSignalX = -1;
-	int lastSignalY = -1;
+	String lastSignal = "";
 	
 	public Main main;
 	
@@ -23,35 +22,33 @@ public class Kinect extends J4KSDK {
 			skeletons[i] = Skeleton.getSkeleton(i, skeleton_tracked, positions,orientations,joint_status, this);
 			
 			if (skeletons[i] != null && skeletons[i].isTracked()) {
-				final float X = skeletons[i].get3DJointX(Skeleton.HEAD);
-				final float Y = skeletons[i].get3DJointY(Skeleton.HEAD);
-				final float Z = skeletons[i].get3DJointZ(Skeleton.HEAD);
+				final float X = skeletons[i].get3DJointX(Skeleton.SPINE_MID);
+				final float Y = skeletons[i].get3DJointY(Skeleton.SPINE_MID);
+				final float Z = skeletons[i].get3DJointZ(Skeleton.SPINE_MID);
 				
 				Thread thread = new Thread() {
 					public void run() {
+						
+						String signal = "";
+						
 						if(X > 0) {
-							if(lastSignalX != 0) {
-								main.arduino.serialWrite("95|");
-								lastSignalX = 0;
-							}
+							signal += "7";
 						} else {
-							if(lastSignalX != 1) {
-								main.arduino.serialWrite("15|");
-								lastSignalX = 1;
-							}
+							signal += "4";
 						}
 						
 						if(Y > 0) {
-							if(lastSignalY != 0) {
-								main.arduino.serialWrite("59|");
-								lastSignalY = 0;
-							}
+							signal += "6";
 						} else {
-							if(lastSignalY != 1) {
-								main.arduino.serialWrite("51|");
-								lastSignalY = 1;
-							}
+							signal += "4";
 						}
+						
+						if(!lastSignal.equals(signal)) {
+							lastSignal = signal;
+							
+							main.arduino.serialWrite(signal + "|");
+						}
+						
 					}
 				};
 				thread.start();
