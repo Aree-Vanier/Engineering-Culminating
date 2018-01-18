@@ -8,6 +8,8 @@ public class Kinect extends J4KSDK {
 	public Skeleton skeletons[] = new Skeleton[6];
 	public float X, Y, Z;
 	
+	int lastSignal = -1;
+	
 	public Main main;
 	
 	public Kinect(Main main) {
@@ -26,15 +28,27 @@ public class Kinect extends J4KSDK {
 				Z = skeletons[i].get3DJointZ(Skeleton.SPINE_MID);
 				
 				if(X > 0) {
-					main.arduino.serialWrite("95|");
+					if(lastSignal != 0) {
+						main.arduino.serialWrite("95|");
+						lastSignal = 0;
+					}
 				} else {
-					main.arduino.serialWrite("15|");
+					if(lastSignal != 1) {
+						main.arduino.serialWrite("15|");
+						lastSignal = 1;
+					}
 				}
 				
 				if(Y > 0) {
-					main.arduino.serialWrite("59|");
+					if(lastSignal != 2) {
+						main.arduino.serialWrite("59|");
+						lastSignal = 2;
+					}
 				} else {
-					main.arduino.serialWrite("51|");
+					if(lastSignal != 3) {
+						main.arduino.serialWrite("51|");
+						lastSignal = 3;
+					}
 				}
 				
 				main.xLabel.setText("X : " + String.format("%.3f", X));
