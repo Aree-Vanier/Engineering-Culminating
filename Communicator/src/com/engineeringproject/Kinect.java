@@ -30,16 +30,17 @@ public class Kinect extends J4KSDK {
 					public void run() {
 						
 						String signal = "";
+						float deadzone = 0.2f;
 						
-						if(X > 0) {
+						if(X > deadzone) {
 							signal += "7";
-						} else {
+						} else if(X < - deadzone) {
 							signal += "4";
 						}
 						
-						if(Y > 0) {
+						if(Y > deadzone) {
 							signal += "6";
-						} else {
+						} else if(Y < - deadzone) {
 							signal += "4";
 						}
 						
