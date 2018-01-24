@@ -33,16 +33,23 @@ public class Kinect extends J4KSDK {
 						float deadzone = 0.2f;
 						
 						if(X > deadzone) {
-							signal += "7";
+							signal += "6";
 						} else if(X < - deadzone) {
 							signal += "4";
+						}else {
+							signal += "5";
 						}
 						
 						if(Y > deadzone) {
-							signal += "6";
+//							signal += "6";
+							setElevationAngle(getElevationAngle() + 3);
 						} else if(Y < - deadzone) {
-							signal += "4";
+//							signal += "4";
+							setElevationAngle(getElevationAngle() - 3);
 						}
+//						}else {
+							signal += "5";
+//						}
 						
 						if(!lastSignal.equals(signal)) {
 							lastSignal = signal;
